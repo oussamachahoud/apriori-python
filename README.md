@@ -51,7 +51,7 @@ pip install pandas
 
 4. Run the script:
    ```bash
-   python script_name.py
+   python Apriori algorithm.py
    ```
 
 ---
