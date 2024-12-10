@@ -1,7 +1,7 @@
 import pandas as pd
 from itertools import combinations
 from tkinter import Tk, Label, Button, Entry, Frame, Text, ttk ,messagebox ,filedialog, Toplevel, Scrollbar, Canvas
-
+import os
 
 # Step 1: Data Preparation (similar to your code)
 data = pd.read_csv('heart_failure_clinical_records_dataset.csv')
@@ -11,8 +11,8 @@ data['ejection_fraction'] = data['ejection_fraction'].apply(lambda x: 1 if x > 5
 data['platelets'] = data['platelets'].apply(lambda x: 1 if x > 150000 and x < 450000 else 0)
 data['serum_creatinine'] = data['serum_creatinine'].apply(lambda x: 1 if x > 0.6 and x < 1.1 else 0)
 data['serum_sodium'] = data['serum_sodium'].apply(lambda x: 1 if x > 135 and x < 145 else 0)
-#data['old'] = data['age'].apply(lambda x: 1 if x > 60  else 0)
-data = data.drop(columns=['age', 'time', 'DEATH_EVENT', 'sex'])
+data['old'] = data['age'].apply(lambda x: 1 if x > 60  else 0)
+data = data.drop(columns=['age', 'time',  'sex'])
 
 transactions = data.apply(lambda row: [col for col in data.columns if row[col] == 1], axis=1).tolist()
 
@@ -120,13 +120,20 @@ def display_results(tables, rules, min_support):
     tree.heading("confidence", text="confidence")
     #text = Text(frame, wrap='word', font=('Arial', 12))
     tree.pack(fill='both', expand=True)
-    for rule in rules:
-        antecedent = ', '.join(rule['antecedent'])
-        consequent = ', '.join(rule['consequent'])
-        tree.insert("",'end',values=( f"{antecedent} => {consequent}" , f"Support: {rule['support']:.2f}", f"Confidence: {rule['confidence']:.2f}"))
+    
+    
+    with open("output.txt", "a") as file:
+       for rule in rules:
+           antecedent = ', '.join(rule['antecedent'])
+           consequent = ', '.join(rule['consequent'])
+           file.write(f"{antecedent} => {consequent} \n")
+           tree.insert("",'end',values=( f"{antecedent} => {consequent}" , f"Support: {rule['support']:.2f}", f"Confidence: {rule['confidence']:.2f}"))
 
 
 def run_apriori():
+    file_path = "output.txt"
+    if os.path.exists(file_path):
+      os.remove(file_path)
     if not support_entry.get() or not confidence_entry.get():
          messagebox.showerror("Error", "Entry is empty. Please provide a value.")
     elif  float(support_entry.get()) > 100 or  float(confidence_entry.get()) > 100:     
@@ -151,7 +158,7 @@ def display_csv():
         # إنشاء نافذة جديدة
         new_window = Toplevel(main_window)
         new_window.title("CSV Nettoyage")
-        new_window.geometry("800x500")
+        new_window.geometry("920x500")
 
         
  
