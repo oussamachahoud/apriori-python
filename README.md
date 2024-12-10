@@ -75,7 +75,11 @@ pip install pandas
 
 ```
 apriori-python/
-├── script_name.py                   # Main Python script with the GUI and algorithm implementation
+├── Apriori algorithm.py                   # Main Python script with the GUI and algorithm implementation
+├── Capture1.png  #Main Window
+app screenshot 1
+├── Capture2.png  # Cleaned Dataset Display
+app screenshot 2
 ├── heart_failure_clinical_records_dataset.csv  # Dataset for preprocessing
 ├── output.txt                       # Generated output for association rules
 └── README.md                        # Project documentation
