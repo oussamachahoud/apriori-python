@@ -26,7 +26,8 @@ Ensure the following Python libraries are installed:
 - `pandas`
 - `tkinter` (built-in for Python)
 - `itertools`
-
+- `os`
+  
 You can install any missing libraries using `pip`:
 ```bash
 pip install pandas
